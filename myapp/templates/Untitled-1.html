@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization</title>
+
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Add your CSS styles here -->
+    <style>
+        /* Add your styles if needed */
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <h2>Intensity Distribution</h2>
+        <canvas id="intensityChart" width="400" height="200"></canvas>
+    </div>
+
+    <div>
+        <h2>Likelihood Distribution</h2>
+        <canvas id="likelihoodChart" width="400" height="200"></canvas>
+    </div>
+
+    <div>
+        <h2>Relevance Scores</h2>
+        <canvas id="relevanceChart" width="400" height="200"></canvas>
+    </div>
+
+    <div>
+        <h2>Data Over Years</h2>
+        <canvas id="yearChart" width="400" height="200"></canvas>
+    </div>
+
+    <div>
+        <h2>Entries by Country</h2>
+        <canvas id="countryChart" width="400" height="200"></canvas>
+    </div>
+
+    <div>
+        <h2>Topic Frequency</h2>
+        <canvas id="topicChart" width="400" height="200"></canvas>
+    </div>
+
+    <div>
+        <h2>Region Distribution</h2>
+        <canvas id="regionChart" width="400" height="200"></canvas>
+    </div>
+
+    <div>
+        <h2>City Entries</h2>
+        <canvas id="cityChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        // AJAX call to fetch data
+        $.ajax({
+            url: 'http://localhost:8000/data/',  // Replace with your actual URL
+            method: 'GET',
+            dataType: 'json',
+            success: function (dataFromViews) {
+                // Extract data from the response
+                var data = dataFromViews.data;
+
+                // Extract data for each chart
+                var intensityData = data.map(item => item.intensity);
+                var likelihoodData = data.map(item => item.likelihood);
+                var relevanceData = data.map(item => item.relevance);
+                var yearData = data.map(item => item.year);
+                var countryData = data.map(item => item.country);
+                var topicData = data.map(item => item.topic);
+                var regionData = data.map(item => item.region);
+                var cityData = data.map(item => item.city);
+
+                // Create charts
+                createBarChart('intensityChart', 'Intensity Distribution', 'Intensity', intensityData);
+                createBarChart('likelihoodChart', 'Likelihood Distribution', 'Likelihood', likelihoodData);
+                createBarChart('relevanceChart', 'Relevance Scores', 'Relevance', relevanceData);
+                createLineChart('yearChart', 'Data Over Years', 'Year', yearData);
+                createBarChart('countryChart', 'Entries by Country', 'Country', countryData);
+                createBarChart('topicChart', 'Topic Frequency', 'Topic', topicData);
+                createBarChart('regionChart', 'Region Distribution', 'Region', regionData);
+                createBarChart('cityChart', 'City Entries', 'City', cityData);
+            },
+            error: function (error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+
+        // Function to create a bar chart
+        function createBarChart(chartId, chartTitle, label, data) {
+            var ctx = document.getElementById(chartId).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to create a line chart
+        function createLineChart(chartId, chartTitle, label, data) {
+            var ctx = document.getElementById(chartId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
