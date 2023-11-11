@@ -48,6 +48,26 @@ label {
     font-weight: bold;
 }
 
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
 select,
 input {
     width: 100%;
@@ -60,6 +80,25 @@ input {
 /* Style the "Apply Filters" button */
 #applyFiltersBtn {
     margin-top: 10px;
+}
+
+main-content {
+
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.container-fluid {
+
+    transition: all 0.3s ease-in-out;
+}
+
+.expanded-container {
+    padding-left: 350px !important;
 }
 
 #resetFiltersBtn {
