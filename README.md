@@ -49,8 +49,14 @@ Make sure you have the following installed before proceeding:
 
 ## Usage
 
-To run the development server, use the following command:
+1. Run the development server:
 
-```bash
-python manage.py runserver
-```
+   ```bash
+   python manage.py runserver
+   ```
+
+2. Visit [http://localhost:8000/data/](http://localhost:8000/data/) in your web browser.
+
+3. Use the POST button on the page to insert data into the SQL database.
+
+4. After inserting data, visit [http://localhost:8000/](http://localhost:8000/) to enjoy the data visualization.
