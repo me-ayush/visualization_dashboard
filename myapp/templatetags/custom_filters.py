@@ -1,16 +1,24 @@
 # custom_filters.py
 from django import template
-
 register = template.Library()
 
 @register.filter(name='unique_topics')
-def unique_topics(data_list):
+def unique_topics(data_list, column):
+    return unique_values(data_list, column)
+
+def unique_values(data_list, column):
     unique_set = set()
     unique_data_list = []
 
     for data in data_list:
-        if data.topic not in unique_set and data.topic != '':
-            unique_set.add(data.topic)
-            unique_data_list.append({'value':data.topic.title(), "key": data.topic})
+        try:
+            value = data[column]
+            if value not in unique_set and value != '':
+                unique_set.add(value)
+                unique_data_list.append({'value': value.title(), 'key': value})
+        except Exception as e:
+            print(e)
 
-    return unique_data_list
+    sorted_data_list = sorted(unique_data_list, key=lambda x: x['key'])
+
+    return sorted_data_list

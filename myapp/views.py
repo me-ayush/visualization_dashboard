@@ -29,11 +29,10 @@ def home(request):
         data_list = list(data_from_views.values())
 
         # Serialize data using the default JSON encoder and escape for use in script tag
-        serialized_data = json.dumps(data_list, cls=DateTimeEncoder)
-        escaped_data = escapejs(serialized_data)
+        # serialized_data = json.dumps(data_list, cls=DateTimeEncoder)
+        # escaped_data = escapejs(serialized_data)
 
-        return render(request, 'home.html', {'data_list': escaped_data})
-        return Response({'message': 'Data retrieved successfully'})
+        return render(request, 'home.html', {'data_list': data_list})
         
 class DateTimeEncoder(DjangoJSONEncoder):
     def default(self, obj):
